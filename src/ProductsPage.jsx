@@ -6,7 +6,7 @@ const ProductsPage = () => {
   useEffect(() => {
     // Fetch products from Google Apps Script
     fetch(
-      "https://script.google.com/macros/s/AKfycbxI2OQJxoc7ogHIIsgJQhTgKorw1JGwEYzLE0bjPcOOaPAhYqvr106l9Eq5ticTvSLO2g/exec"
+      "get api"
     )
       .then((res) => res.json())
       .then((data) => setProducts(data))
@@ -15,7 +15,7 @@ const ProductsPage = () => {
 
   const handleDelete = (productName) => {
     fetch(
-      "https://script.google.com/macros/s/AKfycbxVryyqCooF4MKZIPVPVZIS2pTJGtpPll3ehVggPxvE1QH-GQxF5WW5QsducXzW6q4j3Q/exec",
+      "delete api",
       {
         method: "POST",
         body: new URLSearchParams({

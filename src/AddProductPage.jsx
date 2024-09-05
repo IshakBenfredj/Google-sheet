@@ -17,19 +17,16 @@ const AddProductPage = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    
+
     const formData = new FormData(formRef.current);
     if (imageBase64) {
       formData.append("Image", imageBase64);
     }
 
-    fetch(
-      "https://script.google.com/macros/s/AKfycbx3iyje7dCA45N39nmCa8MgoivRX9BdjtC9S6IZKM_Vwu3r_dA6sGH8yeC8VVUx6cr9FQ/exec",
-      {
-        method: "POST",
-        body: formData,
-      }
-    )
+    fetch("add api", {
+      method: "POST",
+      body: formData,
+    })
       .then((res) => res.json())
       .then((data) => {
         console.log(data);
@@ -41,11 +38,34 @@ const AddProductPage = () => {
   return (
     <div>
       <h1>Add New Product</h1>
-      <form onSubmit={handleSubmit} ref={formRef}>
-        <input type="text" name="Name" placeholder="Product Name" required />
-        <input type="number" name="Price" placeholder="Price" required />
-        <textarea name="Description" placeholder="Description" required />
-        <input type="file" name="Image" accept="image/*" onChange={handleFileChange} />
+      <form onSubmit={handleSubmit} ref={formRef} className="flex-col flex">
+        <input
+          type="text"
+          name="Name"
+          placeholder="Product Name"
+          required
+          className="block"
+        />
+        <input
+          type="number"
+          name="Price"
+          placeholder="Price"
+          required
+          className="block"
+        />
+        <textarea
+          name="Description"
+          placeholder="Description"
+          required
+          className="block"
+        />
+        <input
+          type="file"
+          name="Image"
+          accept="image/*"
+          onChange={handleFileChange}
+          className="block"
+        />
         <button type="submit">Add Product</button>
       </form>
     </div>
