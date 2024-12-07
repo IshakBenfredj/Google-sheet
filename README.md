@@ -4,21 +4,21 @@ Then login if you are not , then create new document and enter your data title i
 <img src="/src/assets/image.png" />
 
 then click in Extensions > Apps scripts and replace this code :
-<code>
+```
 function myFunction() {
 
 }
-</code>
+```
 
 by this :
-<code>
+```
 function doPost(e) {
   const sheet = SpreadsheetApp.openByUrl('your google sheet link').getActiveSheet();
   const data = e.parameter;
   sheet.appendRow([data.Name, data.Price, data.Description,data.Image]);
   return ContentService.createTextOutput(JSON.stringify({ 'result': 'success', 'msg': 'Data submitted successfully' })).setMimeType(ContentService.MimeType.JSON);
 }
-</code>
+```
 replace "your google sheet link" with your <a href="#link">google sheet link</a> then click ctrl+s to save
 this code is for add product , and to add product in your website you need an api 
 <h1>How get Api ?</h1>
@@ -41,7 +41,7 @@ coper your web url and paste it in the page of add priduct in api fetch
 in the page of apps scripts add new fichiers one for get and one for delete and paste this codes
 
 code of get :
-<code>
+```
 function doGet(e) {
   const sheet = SpreadsheetApp.openByUrl('your google sheet link').getActiveSheet();
   const data = sheet.getDataRange().getValues();
@@ -57,10 +57,10 @@ function doGet(e) {
   
   return ContentService.createTextOutput(JSON.stringify(products)).setMimeType(ContentService.MimeType.JSON);
 }
-</code>
+```
  
 code of delete :
-<code>
+```
 function doPost(e) {
   const sheet = SpreadsheetApp.openByUrl('your google sheet link').getActiveSheet();
   const data = e.parameter;
@@ -88,7 +88,7 @@ function doPost(e) {
   return ContentService.createTextOutput(JSON.stringify({ 'result': 'error', 'msg': 'Invalid parameters' })).setMimeType(ContentService.MimeType.JSON);
 }
 
-</code>
+```
 
 
 then use same steps to get api of each one and paste it in ProductsPage component
