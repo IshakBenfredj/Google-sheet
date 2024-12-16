@@ -62,16 +62,15 @@ function doGet(e) {
 code of delete :
 ```
 function doPost(e) {
-  const sheet = SpreadsheetApp.openByUrl('your google sheet link').getActiveSheet();
+  const sheet = SpreadsheetApp.openByUrl('https://docs.google.com/spreadsheets/d/1jAV8-JOHWKBApxn7Obcd6Jgrf9rKQeousxbGZKD68rY/edit?gid=0#gid=0').getActiveSheet();
   const data = e.parameter;
 
-  if (data.action === "delete" && data.Name) {
-    const range = sheet.getRange('A:A'); // Assuming names are in column A
+    const range = sheet.getRange('B:B'); // Assuming dates are in column B
     const values = range.getValues();
     let rowToDelete = -1;
 
     for (let i = 0; i < values.length; i++) {
-      if (values[i][0] === data.Name) {
+      if (values[i][0] == data.date) { // Compare the date in column B
         rowToDelete = i + 1; // Rows are 1-indexed
         break;
       }
@@ -79,13 +78,14 @@ function doPost(e) {
 
     if (rowToDelete > 0) {
       sheet.deleteRow(rowToDelete);
-      return ContentService.createTextOutput(JSON.stringify({ 'result': 'success', 'msg': 'Product deleted successfully' })).setMimeType(ContentService.MimeType.JSON);
+      return ContentService.createTextOutput(
+        JSON.stringify({ result: 'success', msg: 'Row deleted successfully' })
+      ).setMimeType(ContentService.MimeType.JSON);
     } else {
-      return ContentService.createTextOutput(JSON.stringify({ 'result': 'error', 'msg': 'Product not found' })).setMimeType(ContentService.MimeType.JSON);
+      return ContentService.createTextOutput(
+        JSON.stringify({ result: 'error', msg: 'Row not found for the given date' })
+      ).setMimeType(ContentService.MimeType.JSON);
     }
-  }
-
-  return ContentService.createTextOutput(JSON.stringify({ 'result': 'error', 'msg': 'Invalid parameters' })).setMimeType(ContentService.MimeType.JSON);
 }
 
 ```
