@@ -62,7 +62,7 @@ function doGet(e) {
 code of delete :
 ```
 function doPost(e) {
-  const sheet = SpreadsheetApp.openByUrl('https://docs.google.com/spreadsheets/d/1jAV8-JOHWKBApxn7Obcd6Jgrf9rKQeousxbGZKD68rY/edit?gid=0#gid=0').getActiveSheet();
+  const sheet = SpreadsheetApp.openByUrl('google sheet link').getActiveSheet();
   const data = e.parameter;
 
     const range = sheet.getRange('B:B'); // Assuming dates are in column B
