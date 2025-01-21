@@ -93,7 +93,7 @@ function doPost(e) {
 code of update :
 ```
 function doPost(e) {
-  const sheet = SpreadsheetApp.openByUrl('https://docs.google.com/spreadsheets/d/1cjzB8U416DaZKtBXYr7QayUJV69Atm1sZ4ue-pl3htU/edit?pli=1&gid=0#gid=0').getActiveSheet();
+  const sheet = SpreadsheetApp.openByUrl('google sheet link').getActiveSheet();
   
   // Validate request body
   if (!e.parameter) {
