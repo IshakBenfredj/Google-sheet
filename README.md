@@ -95,7 +95,6 @@ code of update :
 function doPost(e) {
   const sheet = SpreadsheetApp.openByUrl('google sheet link').getActiveSheet();
   
-  // Validate request body
   if (!e.parameter) {
     return ContentService.createTextOutput(JSON.stringify({ 
       'result': 'error', 
@@ -104,49 +103,44 @@ function doPost(e) {
   }
 
   const data = e.parameter;
-  
-  // Validate required fields
-  if (!data.Phone || !data.Name) {
-    return ContentService.createTextOutput(JSON.stringify({ 
-      'result': 'error', 
-      'msg': 'Phone and Name are required' 
-    })).setMimeType(ContentService.MimeType.JSON);
-  }
 
-  // Find the row of the user to update
   const values = sheet.getDataRange().getValues();
-  const userRowIndex = values.findIndex(row => row[1] == data.Phone);
+  const testRowIndex = values.findIndex(row => row[0] == data.id);
   
-  if (userRowIndex === -1) {
+  if (testRowIndex === -1) {
     return ContentService.createTextOutput(JSON.stringify({ 
       'result': 'error', 
-      'msg': 'مستخدم غير موجود' 
+      'msg': 'غير موجود' 
     })).setMimeType(ContentService.MimeType.JSON);
   }
 
   try {
-    // Update the user's data
-    sheet.getRange(userRowIndex + 1, 1, 1, 7).setValues([[
-      data.Name,
-      data.Phone,
-      data.Password,
-      data.Birthday,
-      data.SickTitle,
-      data.SickDetails,
-      data.Sexe
-    ]]);
+    // تحقق من عدد الأعمدة المتاحة
+    const columnsCount = sheet.getLastColumn();
+    
+    // تحديث البيانات، مع التأكد من أن عدد القيم يطابق عدد الأعمدة
+    const updatedRow = [
+      data.id || "",
+      data.patient || "",
+      data.result || "",
+      data.date || "",
+      data.image
+    ];
+
+    sheet.getRange(testRowIndex + 1, 1, 1, updatedRow.length).setValues([updatedRow]);
     
     return ContentService.createTextOutput(JSON.stringify({ 
       'result': 'success', 
-      'msg': 'تم تحديث المستخدم بنجاح' 
+      'msg': 'تم الحفظ بنجاح' 
     })).setMimeType(ContentService.MimeType.JSON);
   } catch (error) {
     return ContentService.createTextOutput(JSON.stringify({ 
       'result': 'error', 
-      'msg': 'فشل تحديث المستخدم ' + error.toString() 
+      'msg': 'فشل الحفظ ' + error.toString() 
     })).setMimeType(ContentService.MimeType.JSON);
   }
 }
+
 ```
 
 
